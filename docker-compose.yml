@@ -1,0 +1,67 @@
+version: "3.9"
+   
+services:
+  rabbit:
+    image: rabbitmq:3-alpine
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbituser
+      - RABBITMQ_DEFAULT_PASS=rabbitpass
+      - RABBITMQ_DEFAULT_VHOST=/
+  db:
+    image: postgres
+    volumes:
+      - /mnt/docker/djangotest/data/db:/var/lib/postgresql/data 
+    environment:
+      - POSTGRES_NAME=project
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin321
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=project
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin321
+    depends_on:
+      - db
+
+  worker:
+    build: .
+    command: celery --app=composeexample worker --loglevel=INFO -Q celery --concurrency=1
+    volumes:
+      - .:/code
+    environment:
+      - POSTGRES_NAME=project
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin321
+    depends_on:
+      - db
+ 
+  worker2:
+    build: .
+    command: celery --app=composeexample worker --loglevel=INFO -Q polls --concurrency=1
+    volumes:
+      - .:/code
+    environment:
+      - POSTGRES_NAME=project
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin321
+    depends_on:
+      - db
+
+  redis: 
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning 
+    volumes: 
+      - .:/data
