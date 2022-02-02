@@ -13,7 +13,7 @@
                     <table class="table table-bordered">
                         <thead>
                         <tr>
-                            <th scope="col"><strong>Question</strong> <a class="btn btn-primary btn-sm" href="/admin/" role="button">New</a></th>
+                            <th scope="col"><strong>Question</strong> <a class="btn btn-primary btn-sm" href="/admin/polls/question/add/" role="button">New</a></th>
                             <th scope="col">Views</th>
                         </tr>
                         </thead>
@@ -44,19 +44,29 @@
                     <form action="/polls/send_mail/" method="post">{% csrf_token %}
                         <div class="form-group">
                             <label for="fname">sender email:</label>
-                            <input type="text" class="form-control" id="sender" name="sender" required>
+                            <input type="text" class="form-control" id="sender" name="sender" placeholder="example@gmail.com" required>
+                            <small id="emailHelp" class="form-text text-muted"></small>
                         </div>
                         <div class="form-group">
                             <label for="fname">sender email password:</label>
-                            <input type="password" class="form-control" id="sender_password" name="sender_password" required>
+                            <input type="password" class="form-control" id="sender_password" name="sender_password" placeholder="secret password"required>
                         </div> 
                         <div class="form-group">
                             <label for="lname">receiver email:</label>
-                            <input type="text" class="form-control" id="receiver" name="receiver" required> 
+                            <input type="text" class="form-control" id="receiver" name="receiver" placeholder="example@gmail.com" required> 
+                            <small id="emailHelp2" class="form-text text-muted"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">number of messages:</label>
+                            <select class="form-control" id="number_messages" name="number_messages">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="lname">Message:</label>
-                            <textarea class="form-control" id="message" name="message" rows="3" required></textarea>
+                            <textarea class="form-control" id="message" name="message" rows="3" placeholder="Hi my friend!, how is it going?!!!" required></textarea>
                         </div>
                         <input type="submit" class="btn btn-primary value="Submit">
                     </form>
@@ -69,6 +79,55 @@
     
 {% endblock %}
         
+{% block js %}
+    <script>
+        ///^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        const validateEmail = (email) => {
+            return email.match(
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            );
+        };
+
+        const validate = (element, helper_id) => {
+            const result = document.getElementById(helper_id);
+            const email = element.value;
+            result.innerHTML = ""
+            console.log("email")
+            console.log(email)
+
+            res = validateEmail(email)
+            if(res){
+                
+                if (res.length > 0) {
+                    console.log(res.length )
+                    result.innerHTML = email + ' is valid';
+                } else {
+                    result.innerHTML = email + ' is not valid';
+                }
+            }else{
+                result.innerHTML = email + ' is not valid';
+            }
+            
+            console.log("res")
+            console.log(res)
+            return res;
+        }
+        sender = document.getElementById('sender')
+        sender.addEventListener('change', (event) => {
+            console.log(sender)
+            validate(sender,'emailHelp');
+        });
         
+
+        receiver = document.getElementById('receiver')
+        receiver.addEventListener('change', (event) => {
+            console.log(receiver)
+            validate(receiver,'emailHelp2');
+        });
+        
+
+        //$('#sender').on('input', validate);
+    </script>
+{% endblock %}
         
 

@@ -10,5 +10,5 @@ urlpatterns = [
     path('<int:question_id>/', views.detail, name='detail'),
     # ex: /polls/5/results/
     path('<int:question_id>/results/', views.results, name='results'),
-    #path('send_mail/', views.send_mail, name='send_mail'),
+    path('send_mail/', views.send_mail, name='send_mail'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

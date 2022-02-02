@@ -54,19 +54,26 @@ def results(request, question_id):
     response = "You're looking at the results of question %s."
     return HttpResponse(response % question_id)
 
-
-
-
 def send_mail(request):
     if request.method=='GET':
         return render(request,'polls.html')
     else:
-        sender=request.POST.get('sender','')
-        sender_password=request.POST.get('sender_password','')
-        receiver=request.POST.get('receiver','')
-        message=request.POST.get('message','')
+        try:
+            sender=request.POST.get('sender','')
+            sender_password=request.POST.get('sender_password','')
+            receiver=request.POST.get('receiver','')
+            message=request.POST.get('message','')
+            number_messages=request.POST.get('number_messages','')
+            
+            messages_status = []
+            for i in range(1,int(number_messages)):
+                messages_status.append(task_send_mail(sender,sender_password,receiver,message))
+            template = loader.get_template('polls/messages_status.html')
+            context = {
+                'messages_status': messages_status
+            }
+            return HttpResponse(template.render(context, request))
+        except Exception as e:
+            return HttpResponse("Error!:" + e)
 
-        for i in range(1,3):
-            task_send_mail(sender,sender_password,receiver,message)
-
-        return HttpResponse('vista mensajes..')
+        

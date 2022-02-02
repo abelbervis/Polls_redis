@@ -1,0 +1,28 @@
+{% extends 'polls/home.html' %}
+{% block body %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/polls/">Polls</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Details</li>
+        </ol>
+    </nav>
+    {% if messages_status %}
+    
+    <div class="jumbotron">
+        <h2>Messages status:</h2>
+        
+        <div class="list-group">
+            {% for status in messages_status %}
+                {% if 'Sent' in status %}
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">{{ status }}</a>
+                {% else %}
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-success">{{ status }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+    </div>
+    {% else %}
+        <p>No messages are available.</p>
+    {% endif %}
+{% endblock %}
