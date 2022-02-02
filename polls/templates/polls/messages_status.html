@@ -14,9 +14,9 @@
         <div class="list-group">
             {% for status in messages_status %}
                 {% if 'Sent' in status %}
-                    <a href="#" class="list-group-item list-group-item-action list-group-item-secondary">{{ status }}</a>
-                {% else %}
                     <a href="#" class="list-group-item list-group-item-action list-group-item-success">{{ status }}</a>
+                {% else %}
+                    <a href="#" class="list-group-item list-group-item-action list-group-item-danger">{{ status }}</a>
                 {% endif %}
             {% endfor %}
         </div>
