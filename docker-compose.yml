@@ -51,7 +51,7 @@ services:
     volumes:
       - .:/code
     environment:
-      - POSTGRES_NAME=project
+      - POSTGRES_DB=project
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin321
     depends_on:
