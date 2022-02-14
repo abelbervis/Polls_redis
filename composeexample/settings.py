@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polls.apps.PollsConfig', 
     'bootstrap4',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -160,11 +161,19 @@ CACHES = {
 }
 
 # Settings for django-bootstrap4
+'''
 BOOTSTRAP4 = {
     "error_css_class": "bootstrap4-error",
     "required_css_class": "bootstrap4-required",
     "javascript_in_head": True,
     "include_jquery": True,
 }
+'''
 
-
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

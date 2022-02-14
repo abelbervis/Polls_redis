@@ -27,7 +27,6 @@ def index(request):
     details_counter = 0
     if len(latest_question_list) > 0:
         for element in latest_question_list:
-            print(element.id)
             element.counter_views = incrCounterView('detail'+str(element.id),0,False)
             details_counter+= int(element.counter_views)
 

@@ -5,14 +5,7 @@ from socket import gaierror
 
 port = 465  # For SSL
 smtp_server = "smtp.gmail.com"
-#sender_email = "abel.kyojin2@gmail.com"  # Enter your address
-#receiver_email = "abel.bervis.quintero@gmail.com"  # Enter receiver address
-#password = "mipassword"
 sending_message = False
-#message = """\
-#Subject: Hi there
-#
-#This message is sent from Python."""
 
 @shared_task
 def task_send_mail(sender_email,password,receiver_email,message):

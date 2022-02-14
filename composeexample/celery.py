@@ -1,5 +1,4 @@
 import os
-#import smtplib, ssl
 
 from celery import Celery
 
