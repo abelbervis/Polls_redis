@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-9+or5&-i-k7x6_(k7jmqyx%2!ns7^-kt%=db$pd=%04cuodv@1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','192.168.88.236']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.88.236']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig', 
     'bootstrap4',
     'rest_framework',
+    'snippets',
 ]
 
 MIDDLEWARE = [
@@ -169,11 +170,21 @@ BOOTSTRAP4 = {
     "include_jquery": True,
 }
 '''
-
+'''
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
+}'''
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+
 }

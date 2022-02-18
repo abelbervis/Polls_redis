@@ -8,3 +8,4 @@ django-bootstrap4
 djangorestframework
 markdown
 django-filter
+pygments
